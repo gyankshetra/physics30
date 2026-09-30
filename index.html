@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>बल एवं गति के नियम 01-30Q - Gyankshetra</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f8f9fa;
+            display: flex;
+            justify-content: center;
+            padding: 10px;
+        }
+
+        .quiz-card {
+            background: #ffffff;
+            width: 100%;
+            max-width: 500px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            overflow: hidden;
+            border: 1px solid #e2e8f0;
+            position: relative;
+        }
+
+        /* Header Top */
+        .header-top {
+            background-color: #121c24;
+            color: #ffffff;
+            padding: 10px 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .brand-home {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            color: #2ecc71;
+            font-weight: 700;
+            font-size: 18px;
+            text-decoration: none;
+        }
+
+        .subject-tag {
+            font-size: 15px;
+            color: #ffffff;
+            font-weight: 400;
+        }
+
+        /* Header Sub Bar */
+        .header-sub {
+            background-color: #1a2632;
+            color: #ffffff;
+            padding: 8px 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-bottom: 3px solid #16a085;
+            font-size: 14px;
+        }
+
+        .palette-btn {
+            background: transparent;
+            color: #ffffff;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            line-height: 1;
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+
+        .palette-btn:hover {
+            background-color: rgba(255, 255, 255, 0.15);
+        }
+
+        .chapter-title {
+            color: #ffffff;
+            font-size: 14px;
+        }
+
+        .chapter-title span {
+            background: #ffffff;
+            color: #000;
+            padding: 1px 5px;
+            border-radius: 3px;
+            font-weight: bold;
+            font-size: 12px;
+            margin-left: 5px;
+        }
+
+        /* Start Screen */
+        .start-screen {
+            padding: 40px 20px 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .input-group {
+            width: 100%;
+            margin-top: 60px;
+            margin-bottom: 15px;
+        }
+
+        .input-group label {
+            display: block;
+            font-size: 14px;
+            color: #2c3e50;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #dcdfe6;
+            border-radius: 6px;
+            font-size: 14px;
+            outline: none;
+        }
+
+        .btn-start {
+            width: 100%;
+            background-color: #10b981;
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn-start:hover {
+            background-color: #059669;
+        }
+
+        /* Quiz Main Box */
+        .quiz-container {
+            display: none;
+        }
+
+        .quiz-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 20px;
+            background-color: #f8f9fa;
+            border-bottom: 1px solid #e9ecef;
+            font-weight: 600;
+        }
+
+        .timer {
+            color: #e74c3c;
+        }
+
+        .quiz-body {
+            padding: 20px;
+        }
+
+        .question-text {
+            font-size: 16px;
+            line-height: 1.5;
+            color: #2c3e50;
+            margin-bottom: 18px;
+            font-weight: 600;
+        }
+
+        .options-list {
+            list-style: none;
+        }
+
+        .option-item {
+            background-color: #f8f9fa;
+            border: 1.5px solid #dee2e6;
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            cursor: pointer;
+        }
+
+        .option-item.correct {
+            background-color: #d4edda !important;
+            border-color: #28a745 !important;
+            color: #155724;
+            font-weight: bold;
+        }
+
+        .option-item.wrong {
+            background-color: #f8d7da !important;
+            border-color: #dc3545 !important;
+            color: #721c24;
+        }
+
+        .quiz-footer {
+            padding: 15px 20px;
+            background-color: #fafbfc;
+            border-top: 1px solid #e9ecef;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .btn {
+            padding: 8px 18px;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .btn-prev { background-color: #6c757d; color: white; }
+        .btn-next { background-color: #10b981; color: white; }
+
+        /* Scorecard */
+        .score-box {
+            text-align: center;
+            padding: 30px 20px;
+            display: none;
+        }
+
+        .score-val {
+            font-size: 32px;
+            color: #10b981;
+            font-weight: bold;
+            margin: 15px 0;
+        }
+
+        /* Question Palette Popup Modal */
+        .popup-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .popup-content {
+            background: #fff;
+            width: 90%;
+            max-width: 400px;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+        }
+
+        .popup-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 8px;
+        }
+
+        .popup-header h3 {
+            font-size: 16px;
+            color: #1a2632;
+        }
+
+        .close-btn {
+            background: transparent;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            color: #888;
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 10px;
+            max-height: 250px;
+            overflow-y: auto;
+            padding: 5px;
+        }
+
+        .q-grid-btn {
+            padding: 8px 0;
+            background: #e9ecef;
+            border: 1px solid #ced4da;
+            border-radius: 5px;
+            font-weight: 600;
+            cursor: pointer;
+            text-align: center;
+            font-size: 13px;
+        }
+
+        .q-grid-btn.answered {
+            background: #10b981;
+            color: #fff;
+            border-color: #059669;
+        }
+
+        .q-grid-btn.current {
+            border: 2px solid #3498db;
+            box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
+        }
+    </style>
+</head>
+<body>
+
+<div class="quiz-card">
+    <!-- Top Header Bar -->
+    <div class="header-top">
+        <a href="#" class="brand-home">
+            <span>🏠</span> Gyankshetra
+        </a>
+        <span class="subject-tag">physics</span>
+    </div>
+
+    <!-- Sub Header Bar -->
+    <div class="header-sub">
+        <button class="palette-btn" onclick="openPalette()" title="Question Palette">☰</button>
+        <div class="chapter-title">बल एवं गति के नियम <span>01-30Q</span></div>
+    </div>
+
+    <!-- Start Screen -->
+    <div class="start-screen" id="start-screen">
+        <div class="input-group">
+            <label for="c-name">Candidate Name:</label>
+            <input type="text" id="c-name" placeholder="Enter your name...">
+        </div>
+        <button class="btn-start" onclick="startQuiz()">Start ➔</button>
+    </div>
+
+    <!-- Main Quiz View -->
+    <div class="quiz-container" id="quiz-container">
+        <div class="quiz-bar">
+            <span id="q-count">Question 1/30</span>
+            <span class="timer" id="timer">⏱️ 30:00</span>
+        </div>
+
+        <div class="quiz-body">
+            <div class="question-text" id="q-text">प्रश्न लोड हो रहा है...</div>
+            <ul class="options-list" id="options-container"></ul>
+        </div>
+
+        <div class="quiz-footer">
+            <button class="btn btn-prev" id="btn-prev" onclick="prevQuestion()" disabled>Previous</button>
+            <button class="btn btn-next" id="btn-next" onclick="nextQuestion()">Next</button>
+        </div>
+    </div>
+
+    <!-- Scorecard Section -->
+    <div class="score-box" id="score-container">
+        <h2 id="user-display-name">Scorecard</h2>
+        <p style="margin-top:8px;">Attempt Status: <b id="attempt-mode-tag" style="color:#e67e22;">Fresh Attempt</b></p>
+        <div class="score-val" id="final-score">0 / 30</div>
+        <button class="btn btn-next" style="margin: 0 auto;" onclick="retestQuiz()">Re-test (पुनः प्रयास)</button>
+    </div>
+</div>
+
+<!-- Question Palette Modal -->
+<div class="popup-overlay" id="popup-overlay">
+    <div class="popup-content">
+        <div class="popup-header">
+            <h3>Question Palette (प्रश्न सूची)</h3>
+            <button class="close-btn" onclick="closePalette()">✖</button>
+        </div>
+        <div class="grid-container" id="grid-container">
+            <!-- 1-30 Buttons Generated by JS -->
+        </div>
+    </div>
+</div>
+
+<script>
+    const quizData = [
+        { q: "1. बल की परिभाषा न्यूटन के गति के किस नियम से मिलती है?", options: ["प्रथम नियम", "द्वितीय नियम", "तृतीय नियम", "गुरुत्वाकर्षण नियम"], ans: 0 },
+        { q: "2. SI पद्धति में बल का मात्रक क्या है?", options: ["डाइन", "न्यूटन", "जूल", "पास्कल"], ans: 1 },
+        { q: "3. किसी वस्तु का वह गुण जो उसकी विराम या गति की अवस्था में परिवर्तन का विरोध करता है, कहलाता है:", options: ["बल", "त्वरण", "जड़त्व (Inertia)", "संवेग"], ans: 2 },
+        { q: "4. जड़त्व किस राशि पर निर्भर करता है?", options: ["वस्तु के आकार पर", "वस्तु के द्रव्यमान पर", "वस्तु के वेग पर", "आयत पर"], ans: 1 },
+        { q: "5. चलती हुई बस के अचानक रुकने पर यात्री आगे की ओर झुक जाते हैं, यह उदाहरण है:", options: ["विराम के जड़त्व का", "गति के जड़त्व का", "दिशा के जड़त्व का", "बल के नियम का"], ans: 1 },
+        { q: "6. पेड़ की शाखाओं को हिलाने पर फल टूटकर गिर जाते हैं, इसका कारण है:", options: ["गति का जड़त्व", "विराम का जड़त्व", "तृतीय नियम", "गुरुत्वाकर्षण"], ans: 1 },
+        { q: "7. किसी वस्तु के द्रव्यमान (m) और वेग (v) के गुणनफल को क्या कहते हैं?", options: ["त्वरण", "संवेग (Momentum)", "बल", "आवेग"], ans: 1 },
+        { q: "8. संवेग (Momentum) का SI मात्रक क्या होता है?", options: ["kg m/s", "kg m/s²", "N m", "Joule"], ans: 0 },
+        { q: "9. बल का व्यंजक (F = ma) न्यूटन के किस गति नियम से प्राप्त होता है?", options: ["प्रथम नियम", "द्वितीय नियम", "तृतीय नियम", "कोई नहीं"], ans: 1 },
+        { q: "10. 1 न्यूटन बल का मान किसके बराबर होता है?", options: ["1 kg × 1 m/s²", "1 g × 1 cm/s²", "1 kg × 1 m/s", "10⁵ dynes"], ans: 0 },
+        { q: "11. CGS पद्धति में बल का मात्रक क्या है?", options: ["न्यूटन", "डाइन (Dyne)", "पास्कल", "अर्हग"], ans: 1 },
+        { q: "12. 1 न्यूटन कितने डाइन के बराबर होता है?", options: ["10³ dyne", "10⁵ dyne", "10⁷ dyne", "10⁻⁵ dyne"], ans: 1 },
+        { q: "13. क्रिया और प्रतिक्रिया बल हमेशा कार्य करते हैं:", options: ["एक ही वस्तु पर", "अलग-अलग वस्तुओं पर विपरीत दिशा में", "एक ही दिशा में", "बिना दिशा के"], ans: 1 },
+        { q: "14. गति का तीसरा नियम (Action & Reaction) स्पष्ट करता है:", options: ["रॉकेट का प्रक्षेपण", "बंदूक का पीछे हटना", "नाव से किनारे कूदना", "उपरोक्त सभी"], ans: 3 },
+        { q: "15. संवेग परिवर्तन की दर किसके समानुपाती होती है?", options: ["त्वरण के", "आरोपित बल के", "द्रव्यमान के", "वेग के"], ans: 1 },
+        { q: "16. जब किसी वस्तु पर लगे सभी बलों का परिणामी बल शून्य हो, तो बल कहलाता है:", options: ["असंतुलित बल", "संतुलित बल", "घर्षण बल", "गुरुत्वीय बल"], ans: 1 },
+        { q: "17. किसी वस्तु को गति में लाने या रोकने के लिए आवश्यक बल है:", options: ["संतुलित बल", "असंतुलित बल", "आंतरिक बल", "शून्य बल"], ans: 1 },
+        { q: "18. क्रिकेट खिलाड़ी बॉल को कैच करते समय हाथों को पीछे क्यों खींचता है?", options: ["बल घटाने के लिए समय बढ़ाने हेतु", "बल बढ़ाने के लिए", "समय कम करने के लिए", "केवल सुविधा के लिए"], ans: 0 },
+        { q: "19. आवेग (Impulse) का सूत्र क्या होता है?", options: ["बल × समय interval", "द्रव्यमान × त्वरण", "बल / समय", "कार्य / समय"], ans: 0 },
+        { q: "20. आवेग (Impulse) का SI मात्रक क्या है?", options: ["N s (न्यूटन-सेकंड)", "N/s", "J s", "kg/m"], ans: 0 },
+        { q: "21. बाह्य बल की अनुपस्थिति में किसी निकाय का कुल संवेग रहता है:", options: ["शून्य", "बढ़ता है", "संरक्षित (अपरिवर्तित)", "घटता है"], ans: 2 },
+        { q: "22. बंदूक से गोली निकलने पर बंदूक पीछे की ओर धक्का देती है, क्योंकि:", options: ["गोली भारी होती है", "प्रत्येक क्रिया की समान विपरीत प्रतिक्रिया होती है", "त्वरण शून्य होता है", "घर्षण कम होता है"], ans: 1 },
+        { q: "23. काँच के बर्तन को फर्श पर गिरने पर टूटना और चटाई पर न टूटना उदाहरण है:", options: ["आवेग और समय का", "केवल जड़त्व का", "गुरुत्वाकर्षण का", "तृतीय नियम का"], ans: 0 },
+        { q: "24. भारी वस्तु का जड़त्व हल्की वस्तु की तुलना में होता है:", options: ["कम", "अधिक", "बराबर", "शून्य"], ans: 1 },
+        { q: "25. घर्षण बल गति की दिशा के किस तरफ कार्य करता है?", options: ["लंबवत", "समान दिशा में", "विपरीत दिशा में", "किसी भी दिशा में"], ans: 2 },
+        { q: "26. यदि किसी पिंड पर कोई बल न लगाया जाए, तो उसका त्वरण होगा:", options: ["धनात्मक", "ऋणात्मक", "शून्य", "अनंत"], ans: 2 },
+        { q: "27. गैलीलियो ने किस नियम की नींव रखी थी?", options: ["जड़त्व का नियम", "गुरुत्वाकर्षण नियम", "संवेग नियम", "ऊष्मा नियम"], ans: 0 },
+        { q: "28. किसी वस्तु का भार (W) प्रदर्शित किया जाता है:", options: ["W = m × g", "W = m / g", "W = F × s", "W = m + g"], ans: 0 },
+        { q: "29. स्प्रिंग बैलेंस से किसकी माप की जाती है?", options: ["द्रव्यमान की", "भार (बल) की", "आयतन की", "घनत्व की"], ans: 1 },
+        { q: "30. गाड़ियों में सॉक-एब्जॉर्बर (Shock Absorbers) का उपयोग क्यों किया जाता है?", options: ["समय बढ़ाकर झटके (बल) का प्रभाव कम करने के लिए", "गाड़ी की गति बढ़ाने के लिए", "सुंदरता के लिए", "भार कम करने के लिए"], ans: 0 }
+    ];
+
+    let currentIdx = 0;
+    let score = 0;
+    let selectedAnswers = new Array(quizData.length).fill(null);
+    let attemptCount = 1;
+    let quizStarted = false;
+
+    function startQuiz() {
+        const name = document.getElementById("c-name").value.trim();
+        if(!name) {
+            alert("कृपया Candidate Name दर्ज करें।");
+            return;
+        }
+        quizStarted = true;
+        document.getElementById("start-screen").style.display = "none";
+        document.getElementById("quiz-container").style.display = "block";
+        loadQuestion();
+    }
+
+    function loadQuestion() {
+        const currentQ = quizData[currentIdx];
+        document.getElementById("q-count").innerText = `Question ${currentIdx + 1}/30`;
+        document.getElementById("q-text").innerText = currentQ.q;
+        
+        const optionsUl = document.getElementById("options-container");
+        optionsUl.innerHTML = "";
+
+        currentQ.options.forEach((opt, index) => {
+            const li = document.createElement("li");
+            li.className = "option-item";
+            li.innerText = opt;
+
+            if (selectedAnswers[currentIdx] !== null) {
+                if (index === currentQ.ans) li.classList.add("correct");
+                if (selectedAnswers[currentIdx] === index && index !== currentQ.ans) li.classList.add("wrong");
+            } else {
+                li.onclick = () => selectOption(index);
+            }
+
+            optionsUl.appendChild(li);
+        });
+
+        document.getElementById("btn-prev").disabled = currentIdx === 0;
+        document.getElementById("btn-next").innerText = currentIdx === quizData.length - 1 ? "Submit Quiz" : "Next";
+    }
+
+    function selectOption(index) {
+        selectedAnswers[currentIdx] = index;
+        if (index === quizData[currentIdx].ans) score++;
+        loadQuestion();
+    }
+
+    function nextQuestion() {
+        if (currentIdx < quizData.length - 1) {
+            currentIdx++;
+            loadQuestion();
+        } else {
+            showScore();
+        }
+    }
+
+    function prevQuestion() {
+        if (currentIdx > 0) {
+            currentIdx--;
+            loadQuestion();
+        }
+    }
+
+    function showScore() {
+        const name = document.getElementById("c-name").value.trim();
+        document.getElementById("quiz-container").style.display = "none";
+        document.getElementById("score-container").style.display = "block";
+        document.getElementById("user-display-name").innerText = `${name}'s Scorecard`;
+        document.getElementById("final-score").innerText = `${score} / ${quizData.length}`;
+        
+        if (attemptCount > 1) {
+            document.getElementById("attempt-mode-tag").innerText = `Reattempt (${attemptCount - 1})`;
+        } else {
+            document.getElementById("attempt-mode-tag").innerText = "Fresh Attempt";
+        }
+    }
+
+    function retestQuiz() {
+        attemptCount++;
+        currentIdx = 0;
+        score = 0;
+        selectedAnswers.fill(null);
+        document.getElementById("score-container").style.display = "none";
+        document.getElementById("quiz-container").style.display = "block";
+        loadQuestion();
+    }
+
+    /* Popup Functions */
+    function openPalette() {
+        if(!quizStarted) {
+            alert("कृपया नाम लिखकर Start ➔ बटन दबाएं।");
+            return;
+        }
+        const grid = document.getElementById("grid-container");
+        grid.innerHTML = "";
+
+        quizData.forEach((_, i) => {
+            const btn = document.createElement("button");
+            btn.className = "q-grid-btn";
+            btn.innerText = i + 1;
+
+            if (selectedAnswers[i] !== null) {
+                btn.classList.add("answered");
+            }
+            if (i === currentIdx) {
+                btn.classList.add("current");
+            }
+
+            btn.onclick = () => {
+                currentIdx = i;
+                loadQuestion();
+                closePalette();
+            };
+
+            grid.appendChild(btn);
+        });
+
+        document.getElementById("popup-overlay").style.display = "flex";
+    }
+
+    function closePalette() {
+        document.getElementById("popup-overlay").style.display = "none";
+    }
+</script>
+
+</body>
+</html>
